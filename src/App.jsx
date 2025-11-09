@@ -27,14 +27,14 @@ export default function App() {
 
     {/* HERO SECTION */}
     <section className="relative flex min-h-[80vh] flex-col items-center justify-center px-6 py-16 text-center">
-      {/* Animated Logo */}
+      {/* Animated Top Logo (larger) */}
       <motion.img
         src="/assets/Color-Invert.svg"
         alt="CoachUS logo"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="mb-10 h-14 w-auto md:h-16"
+        className="mb-12 h-20 w-auto md:h-24" // ⬅ bigger logo
       />
 
       <div className="mx-auto w-full max-w-3xl text-center">
@@ -126,14 +126,14 @@ export default function App() {
     </section>
 
     {/* FOOTER */}
-    <footer className="border-t border-zinc-900/70 px-6 py-8 text-center text-sm text-zinc-400 flex flex-col items-center gap-2">
-      {/* Small footer logo */}
+    <footer className="border-t border-zinc-900/70 px-6 py-8 text-sm text-zinc-400 flex flex-col items-center sm:flex-row sm:justify-center gap-3 sm:gap-6">
+      {/* Footer logo aligned left of text */}
       <img
         src="/assets/White.svg"
         alt="CoachUS logo"
-        className="h-6 w-auto opacity-80"
+        className="h-6 w-auto opacity-80 sm:mr-3"
       />
-      <p>
+      <p className="text-center sm:text-left">
         © 2025 CoachUS •{" "}
         <a
           href="mailto:info@coachus.com"
@@ -146,4 +146,5 @@ export default function App() {
     </footer>
   </div>
 );
+
 }
