@@ -33,7 +33,7 @@ export default function App() {
         alt="CoachUS logo"
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }} // slower + smoother ease
+        transition={{ duration: 2.0, ease: [0.25, 0.1, 0.25, 1] }} // slower + smoother ease
         className="mb-12 h-20 w-auto md:h-24" // ⬅ bigger logo
       />
 
