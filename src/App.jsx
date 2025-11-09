@@ -1,35 +1,28 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import './index.css'
+import "./index.css";
 
-
-export default function CoachUSLanding() {
+export default function App() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<null | "ok" | "error" | "loading" >(null);
+  const [status, setStatus] = useState(null); // "ok" | "error" | "loading" | null
 
-  // 👉 Replace this with your real Mailchimp/HubSpot endpoint later
-  const FORM_ACTION = "#"; // e.g., https://xxx.list-manage.com/subscribe/post?u=...&id=...
+  const FORM_ACTION = "#"; // replace with your Mailchimp/HubSpot action later
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e) {
     e.preventDefault();
     try {
       setStatus("loading");
-      // If using Mailchimp embedded form, you can just let the browser POST to FORM_ACTION
-      // Here we just simulate success for the demo experience
       await new Promise((r) => setTimeout(r, 800));
       setStatus("ok");
       setEmail("");
-    } catch (_) {
+    } catch {
       setStatus("error");
     }
   }
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-[#F3F3F3] antialiased">
-      {/* Background gradient / subtle vignette */}
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(60,130,246,0.25),rgba(11,11,11,0.0))]" />
-
-      {/* HERO */}
       <section className="relative flex min-h-[80vh] items-center justify-center px-6 py-16">
         <div className="mx-auto w-full max-w-3xl text-center">
           <motion.h1
@@ -37,7 +30,7 @@ export default function CoachUSLanding() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl"
-            style={{ fontFamily: 'Inter, Poppins, ui-sans-serif, system-ui' }}
+            style={{ fontFamily: "Inter, Poppins, ui-sans-serif, system-ui" }}
           >
             The next era of dealership performance begins here.
           </motion.h1>
@@ -47,14 +40,13 @@ export default function CoachUSLanding() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="mx-auto mb-10 max-w-2xl text-lg text-zinc-200 md:text-2xl"
-            style={{ fontFamily: 'Inter, ui-sans-serif' }}
+            style={{ fontFamily: "Inter, ui-sans-serif" }}
           >
             You’ve optimized your inventory.<br />
             You’ve digitized your showroom.<br />
             But your people? Still stuck in the dark.
           </motion.p>
 
-          {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -92,7 +84,6 @@ export default function CoachUSLanding() {
         </div>
       </section>
 
-      {/* REVEAL */}
       <section className="px-6 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -101,7 +92,7 @@ export default function CoachUSLanding() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-3xl text-center"
         >
-          <p className="text-xl text-zinc-200 md:text-2xl" style={{ fontFamily: 'Inter, ui-sans-serif' }}>
+          <p className="text-xl text-zinc-200 md:text-2xl" style={{ fontFamily: "Inter, ui-sans-serif" }}>
             <span className="block font-semibold">CoachUS changes that.</span>
             <span className="block">Daily coaching clarity.</span>
             <span className="block">Powered by data. Delivered by AI.</span>
@@ -110,7 +101,6 @@ export default function CoachUSLanding() {
         </motion.div>
       </section>
 
-      {/* FOOTER */}
       <footer className="border-t border-zinc-900/70 px-6 py-8 text-center text-sm text-zinc-400">
         © 2025 CoachUS • <a href="mailto:info@coachus.com" className="underline decoration-zinc-600 underline-offset-4 hover:decoration-zinc-300">info@coachus.com</a>
         <span className="mx-2">•</span> All rights reserved.
