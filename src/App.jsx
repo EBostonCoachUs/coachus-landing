@@ -135,7 +135,7 @@ export default function App() {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.8, delay: 0.2 }}
-    className="h-4 w-auto opacity-80 sm:mr-2"
+    className="h-4 w-auto opacity-80 sm:mr-2 ml-1"
   />
   <motion.p
     initial={{ opacity: 0, y: 5 }}
