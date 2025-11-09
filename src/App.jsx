@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import './index.css'
+
 
 export default function CoachUSLanding() {
   const [email, setEmail] = useState("");
