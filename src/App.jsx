@@ -129,7 +129,7 @@ export default function App() {
     <footer className="border-t border-zinc-900/70 px-6 py-8 text-sm text-zinc-400 flex flex-col items-center sm:flex-row sm:justify-center gap-3 sm:gap-6">
       {/* Footer logo aligned left of text */}
       <img
-        src="/assets/White.svg"
+        src="/assets/White-cropped.svg"
         alt="CoachUS logo"
         className="h-6 w-auto opacity-80 sm:mr-3"
       />
