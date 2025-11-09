@@ -31,9 +31,9 @@ export default function App() {
       <motion.img
         src="/assets/Color-Invert-cropped.svg"
         alt="CoachUS logo"
-        initial={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }} // slower + smoother ease
         className="mb-12 h-20 w-auto md:h-24" // ⬅ bigger logo
       />
 
