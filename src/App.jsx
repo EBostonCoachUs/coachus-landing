@@ -29,7 +29,7 @@ export default function App() {
     <section className="relative flex min-h-[80vh] flex-col items-center justify-center px-6 py-16 text-center">
       {/* Animated Top Logo (larger) */}
       <motion.img
-        src="/assets/Color-Invert.svg"
+        src="/assets/Color-Invert-cropped.svg"
         alt="CoachUS logo"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
