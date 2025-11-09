@@ -129,13 +129,13 @@ export default function App() {
 <footer className="border-t border-zinc-900/70 px-6 py-8 text-sm text-zinc-400 flex flex-col items-center sm:flex-row sm:justify-center gap-2 sm:gap-4">
   {/* Footer logo with fade-in animation */}
   <motion.img
-    src="/assets/White.svg"
+    src="/assets/White-cropped.svg"
     alt="CoachUS logo"
     initial={{ opacity: 0, y: 5 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.8, delay: 0.2 }}
-    className="h-7 w-auto opacity-80 sm:mr-2 ml-7"
+    className="h-4 w-auto opacity-80 sm:mr-2 ml-5"
   />
   <motion.p
     initial={{ opacity: 0, y: 5 }}
