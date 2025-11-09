@@ -34,7 +34,7 @@ export default function App() {
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 2.0, ease: [0.25, 0.1, 0.25, 1] }} // slower + smoother ease
-        className="mb-12 h-20 w-auto md:h-24" // ⬅ bigger logo
+        className="mb-12 h-20 w-auto md:h-24 transition duration-300 hover:brightness-110 hover:opacity-100" // ⬅ bigger logo
       />
 
       <div className="mx-auto w-full max-w-3xl text-center">
