@@ -41,7 +41,7 @@ export default function App() {
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 1.0 }}
           className="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl"
           style={{ fontFamily: "Inter, Poppins, ui-sans-serif, system-ui" }}
         >
@@ -51,7 +51,7 @@ export default function App() {
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
           className="mx-auto mb-10 max-w-2xl text-lg text-zinc-200 md:text-2xl"
           style={{ fontFamily: "Inter, ui-sans-serif" }}
         >
@@ -134,14 +134,14 @@ export default function App() {
     initial={{ opacity: 0, y: 5 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.6, delay: 0.2 }}
+    transition={{ duration: 0.8, delay: 0.2 }}
     className="h-4 w-auto opacity-80 sm:mr-2"
   />
   <motion.p
     initial={{ opacity: 0, y: 5 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.6, delay: 0.3 }}
+    transition={{ duration: 0.8, delay: 0.3 }}
     className="text-center sm:text-left"
   >
     © 2025 CoachUS •{" "}
