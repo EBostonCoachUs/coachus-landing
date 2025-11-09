@@ -126,24 +126,34 @@ export default function App() {
     </section>
 
     {/* FOOTER */}
-    <footer className="border-t border-zinc-900/70 px-6 py-8 text-sm text-zinc-400 flex flex-col items-center sm:flex-row sm:justify-center gap-3 sm:gap-6">
-      {/* Footer logo aligned left of text */}
-      <img
-        src="/assets/White-cropped.svg"
-        alt="CoachUS logo"
-        className="h-6 w-auto opacity-80 sm:mr-3"
-      />
-      <p className="text-center sm:text-left">
-        © 2025 CoachUS •{" "}
-        <a
-          href="mailto:info@coachus.com"
-          className="underline decoration-zinc-600 underline-offset-4 hover:decoration-zinc-300"
-        >
-          info@coachus.com
-        </a>
-        <span className="mx-2">•</span> All rights reserved.
-      </p>
-    </footer>
+<footer className="border-t border-zinc-900/70 px-6 py-8 text-sm text-zinc-400 flex flex-col items-center sm:flex-row sm:justify-center gap-2 sm:gap-4">
+  {/* Footer logo with fade-in animation */}
+  <motion.img
+    src="/assets/White.svg"
+    alt="CoachUS logo"
+    initial={{ opacity: 0, y: 5 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, delay: 0.2 }}
+    className="h-4 w-auto opacity-80 sm:mr-2"
+  />
+  <motion.p
+    initial={{ opacity: 0, y: 5 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, delay: 0.3 }}
+    className="text-center sm:text-left"
+  >
+    © 2025 CoachUS •{" "}
+    <a
+      href="mailto:info@coachus.com"
+      className="underline decoration-zinc-600 underline-offset-4 hover:decoration-zinc-300"
+    >
+      info@coachus.com
+    </a>
+    <span className="mx-2">•</span> All rights reserved.
+  </motion.p>
+</footer>
   </div>
 );
 
