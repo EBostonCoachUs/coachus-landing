@@ -23,6 +23,13 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-[#F3F3F3] antialiased">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(60,130,246,0.25),rgba(11,11,11,0.0))]" />
+      <section className="relative flex min-h-[80vh] flex-col items-center justify-center px-6 py-16 text-center">
+          {/* Logo */}
+          <img
+            src="/public/assets/Color-Invert.svg"
+            alt="CoachUS logo"
+            className="mb-10 h-14 w-auto md:h-16"
+          />
       <section className="relative flex min-h-[80vh] items-center justify-center px-6 py-16">
         <div className="mx-auto w-full max-w-3xl text-center">
           <motion.h1
