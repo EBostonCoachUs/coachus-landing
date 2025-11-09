@@ -1,0 +1,118 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+export default function CoachUSLanding() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<null | "ok" | "error" | "loading" >(null);
+
+  // 👉 Replace this with your real Mailchimp/HubSpot endpoint later
+  const FORM_ACTION = "#"; // e.g., https://xxx.list-manage.com/subscribe/post?u=...&id=...
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      setStatus("loading");
+      // If using Mailchimp embedded form, you can just let the browser POST to FORM_ACTION
+      // Here we just simulate success for the demo experience
+      await new Promise((r) => setTimeout(r, 800));
+      setStatus("ok");
+      setEmail("");
+    } catch (_) {
+      setStatus("error");
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0B0B0B] text-[#F3F3F3] antialiased">
+      {/* Background gradient / subtle vignette */}
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(60,130,246,0.25),rgba(11,11,11,0.0))]" />
+
+      {/* HERO */}
+      <section className="relative flex min-h-[80vh] items-center justify-center px-6 py-16">
+        <div className="mx-auto w-full max-w-3xl text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl"
+            style={{ fontFamily: 'Inter, Poppins, ui-sans-serif, system-ui' }}
+          >
+            The next era of dealership performance begins here.
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="mx-auto mb-10 max-w-2xl text-lg text-zinc-200 md:text-2xl"
+            style={{ fontFamily: 'Inter, ui-sans-serif' }}
+          >
+            You’ve optimized your inventory.<br />
+            You’ve digitized your showroom.<br />
+            But your people? Still stuck in the dark.
+          </motion.p>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="mx-auto w-full max-w-xl"
+          >
+            {status === "ok" ? (
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-4 text-center text-sm text-zinc-100">
+                You’re on the list. See you soon.
+              </div>
+            ) : (
+              <form onSubmit={onSubmit} action={FORM_ACTION} method="POST" className="flex flex-col gap-3 sm:flex-row">
+                <input
+                  type="email"
+                  required
+                  name="EMAIL"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="h-12 flex-1 rounded-2xl border border-zinc-800 bg-zinc-900/60 px-4 text-base outline-none ring-0 transition focus:border-zinc-600 focus:bg-zinc-900"
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="h-12 rounded-2xl bg-[#3C82F6] px-6 text-base font-medium text-white transition hover:brightness-110 disabled:opacity-60"
+                >
+                  {status === "loading" ? "Sending…" : "Request Early Access"}
+                </button>
+              </form>
+            )}
+            <p className="mt-3 text-center text-xs text-zinc-400">
+              Coming soon in stealth. Designed to replace micromanagement with momentum.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* REVEAL */}
+      <section className="px-6 pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <p className="text-xl text-zinc-200 md:text-2xl" style={{ fontFamily: 'Inter, ui-sans-serif' }}>
+            <span className="block font-semibold">CoachUS changes that.</span>
+            <span className="block">Daily coaching clarity.</span>
+            <span className="block">Powered by data. Delivered by AI.</span>
+            <span className="block">Built by dealers who lived the chaos.</span>
+          </p>
+        </motion.div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-zinc-900/70 px-6 py-8 text-center text-sm text-zinc-400">
+        © 2025 CoachUS • <a href="mailto:info@coachus.com" className="underline decoration-zinc-600 underline-offset-4 hover:decoration-zinc-300">info@coachus.com</a>
+        <span className="mx-2">•</span> All rights reserved.
+      </footer>
+    </div>
+  );
+}
