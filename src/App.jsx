@@ -3,17 +3,20 @@ import { motion } from "framer-motion";
 import "./index.css";
 
 export default function App() {
+  const [name, setName] = useState("");     // NEW
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState(null); // "ok" | "error" | "loading" | null
 
-  const FORM_ACTION = "#"; // replace with your Mailchimp/HubSpot action later
+  const FORM_ACTION = "#"; // replace later when we wire /api/subscribe (Resend)
 
   async function onSubmit(e) {
     e.preventDefault();
     try {
       setStatus("loading");
+      // simulate success for now
       await new Promise((r) => setTimeout(r, 800));
       setStatus("ok");
+      setName("");        // NEW
       setEmail("");
     } catch {
       setStatus("error");
@@ -79,16 +82,33 @@ export default function App() {
                 method="POST"
                 className="flex flex-col gap-3 sm:flex-row"
               >
+                {/* honeypot (spam trap) */}
+                <input type="text" name="_gotcha" tabIndex="-1" autoComplete="off" className="hidden" />
+
+                {/* Name (optional) */}
+                <input
+                  type="text"
+                  name="name"
+                  aria-label="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Name (optional)"
+                  className="h-12 sm:max-w-[200px] rounded-2xl border border-zinc-800 bg-zinc-900/60 px-4 text-base text-white placeholder:text-zinc-500 outline-none ring-0 transition focus:border-zinc-600 focus:bg-zinc-900 focus:ring-2 focus:ring-[#3C82F6]/40"
+                />
+
+                {/* Email (required) */}
                 <input
                   type="email"
                   required
+                  name="email"
                   aria-label="Email address"
-                  name="EMAIL"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   className="h-12 flex-1 rounded-2xl border border-zinc-800 bg-zinc-900/60 px-4 text-base text-white placeholder:text-zinc-500 outline-none ring-0 transition focus:border-zinc-600 focus:bg-zinc-900 focus:ring-2 focus:ring-[#3C82F6]/40"
                 />
+
+                {/* CTA */}
                 <button
                   type="submit"
                   disabled={status === "loading"}
@@ -114,10 +134,7 @@ export default function App() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-3xl text-center"
         >
-          <p
-            className="text-xl text-zinc-200 md:text-2xl"
-            style={{ fontFamily: "Inter, ui-sans-serif" }}
-          >
+          <p className="text-xl text-zinc-200 md:text-2xl" style={{ fontFamily: "Inter, ui-sans-serif" }}>
             <span className="block font-semibold">CoachUS changes that.</span>
             <span className="block">Daily coaching clarity.</span>
             <span className="block">Powered by data. Delivered by AI.</span>
@@ -128,7 +145,6 @@ export default function App() {
 
       {/* FOOTER */}
       <footer className="border-t border-zinc-900/70 px-6 py-8 text-sm text-zinc-400 flex flex-col items-center sm:flex-row sm:justify-center gap-2 sm:gap-4">
-        {/* Footer logo with fade-in animation */}
         <motion.img
           src="/assets/White-cropped.svg"
           alt="CoachUS logo"
@@ -146,10 +162,7 @@ export default function App() {
           className="text-center sm:text-left"
         >
           © 2025 CoachUS •{" "}
-          <a
-            href="mailto:info@coachus.com"
-            className="underline decoration-zinc-600 underline-offset-4 hover:decoration-zinc-300"
-          >
+          <a href="mailto:info@coachus.com" className="underline decoration-zinc-600 underline-offset-4 hover:decoration-zinc-300">
             info@coachus.com
           </a>
           <span className="mx-2">•</span> All rights reserved.
