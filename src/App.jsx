@@ -110,12 +110,12 @@ export default function App() {
 
                 {/* CTA */}
                 <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="h-12 rounded-2xl bg-[#3C82F6] px-6 text-base font-medium text-white transition disabled:opacity-60 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-[#3C82F6]/40 shadow-[0_0_18px_rgba(60,130,246,0.35)] hover:shadow-[0_0_24px_rgba(60,130,246,0.5)]"
-                >
-                  {status === "loading" ? "Sending…" : "Get Early Access"}
-                </button>
+  type="submit"
+  disabled={status === "loading"}
+  className="h-12 whitespace-nowrap rounded-2xl bg-[#3C82F6] px-8 text-base font-medium text-white transition disabled:opacity-60 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-[#3C82F6]/40 shadow-[0_0_18px_rgba(60,130,246,0.35)] hover:shadow-[0_0_24px_rgba(60,130,246,0.5)]"
+>
+  {status === "loading" ? "Sending…" : "Get Early Access"}
+</button>
               </form>
             )}
             <p className="mt-6 text-center text-xs italic text-zinc-500">
