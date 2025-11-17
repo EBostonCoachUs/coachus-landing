@@ -13,12 +13,23 @@ export default function App() {
     e.preventDefault();
     try {
       setStatus("loading");
-      // simulate success for now
-      await new Promise((r) => setTimeout(r, 800));
-      setStatus("ok");
-      setName("");        // NEW
-      setEmail("");
-    } catch {
+
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setStatus("ok");
+        setName("");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error(err);
       setStatus("error");
     }
   }
