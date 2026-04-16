@@ -27,17 +27,26 @@ export default async function handler(req, res) {
     }
 
     const from = process.env.FROM_ADDRESS || "CoachUS <noreply@coachus.com>";
-    const to = process.env.TEAM_NOTIFY || "eric.boston@coachus.com";
+
+    // 🔥 MULTIPLE RECIPIENTS
+    const to = [
+      "eric.boston@coachus.com",
+      "matt.cady@coachus.com",
+    ];
 
     const safeName = escapeHtml(name || "(not provided)");
     const safeEmail = escapeHtml(email);
     const safePhone = escapeHtml(phone || "(not provided)");
 
+    // 🔥 IMPROVED SUBJECT LINE
+    const subject = `New Waitlist Signup — ${safeName}`;
+
     const html = `
       <div style="font-family:Inter,Arial,sans-serif;background:#0B0B0B;padding:24px;color:#F3F3F3;">
         <div style="max-width:600px;margin:0 auto;background:#111111;border:1px solid #27272a;border-radius:20px;padding:24px;">
+          
           <h2 style="margin:0 0 16px 0;font-size:22px;line-height:1.2;color:#F3F3F3;">
-            New CoachUS waitlist signup
+            New CoachUS Waitlist Signup
           </h2>
 
           <div style="margin-bottom:12px;padding:14px 16px;background:#18181b;border:1px solid #27272a;border-radius:14px;">
@@ -56,8 +65,9 @@ export default async function handler(req, res) {
           </div>
 
           <p style="margin:20px 0 0 0;color:#71717a;font-size:12px;">
-            Source: coachus landing page waitlist form
+            Source: coachus.com waitlist form
           </p>
+
         </div>
       </div>
     `;
@@ -65,12 +75,13 @@ export default async function handler(req, res) {
     await resend.emails.send({
       from,
       to,
-      subject: "New CoachUS waitlist signup",
+      subject,
       html,
       reply_to: email,
     });
 
     return res.status(200).json({ ok: true });
+
   } catch (err) {
     console.error("Subscribe API error:", err);
     return res.status(500).json({ ok: false, error: "Server error" });
