@@ -176,7 +176,7 @@ export default function App() {
                 aria-label="Phone number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="Phone number optional"
+                placeholder="Phone number (optional)"
                 className="h-12 flex-1 rounded-2xl border border-zinc-800 bg-zinc-900/60 px-4 text-base text-white placeholder:text-zinc-500 outline-none ring-0 transition focus:border-zinc-600 focus:bg-zinc-900 focus:ring-2 focus:ring-[#3C82F6]/40"
               />
 
