@@ -22,7 +22,7 @@ export const pageMeta = {
   "/privacy": {
     title: "Privacy Policy | CoachUS",
     description:
-      "A stable draft privacy policy for the CoachUS website and product data management approach.",
+      "The CoachUS privacy policy for website, waitlist, and product data management.",
   },
   "/login": {
     title: "CoachUS Login | Coming Soon",
@@ -118,8 +118,8 @@ export const privacySections = [
     id: "overview",
     title: "Overview",
     body: [
-      "This draft describes how CoachUS expects to handle information collected through the public website, waitlist, and future product experiences.",
-      "It is provided for review and should be confirmed by counsel before it is treated as the final approved policy.",
+      "This policy explains how CoachUS handles information collected through the public website, waitlist, and product experiences.",
+      "CoachUS uses information to operate the site, respond to requests, and support coaching-focused product workflows.",
     ],
   },
   {
@@ -168,8 +168,8 @@ export const privacySections = [
     id: "changes",
     title: "Changes",
     body: [
-      "CoachUS may update this policy as the product, pilot integrations, and legal review progress.",
-      "The effective date should be updated whenever a final approved version is published.",
+      "CoachUS may update this policy as the product, pilot integrations, and website experience evolve.",
+      "When this policy changes, the last updated date on this page should be revised.",
     ],
   },
 ];

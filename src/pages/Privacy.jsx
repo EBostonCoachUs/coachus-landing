@@ -1,6 +1,7 @@
 import AnimatedSection from "../components/AnimatedSection.jsx";
 import { privacySections } from "../data/content.js";
 
+// TODO: Final legal review required before public production launch.
 export default function Privacy() {
   return (
     <>
@@ -13,18 +14,12 @@ export default function Privacy() {
           <h1 className="mt-6 text-balance text-5xl font-semibold leading-tight md:text-7xl">
             CoachUS Privacy Policy
           </h1>
-          <div className="mt-8 rounded-[28px] border border-[#ff7a45]/25 bg-[#ff7a45]/10 p-5 text-left">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#ff9b73]">
-              Draft for legal review
-            </p>
-            <p className="mt-3 leading-7 text-slate-200">
-              No final approved legal privacy policy was included in the
-              supplied materials. This page provides a stable draft structure
-              for review before publication as an approved policy.
-            </p>
-          </div>
+          <p className="mt-6 max-w-3xl text-xl leading-9 text-slate-300">
+            This policy explains how CoachUS handles information collected
+            through the public website, waitlist, and product experiences.
+          </p>
           <p className="mt-6 text-sm text-slate-500">
-            Draft effective date: August 25, 2026
+            Last updated: August 25, 2026
           </p>
         </div>
       </section>

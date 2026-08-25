@@ -17,9 +17,8 @@ export default function ProductPreview({ compact = false }) {
             A daily coaching plan, not another dashboard to decode.
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
-            Actual product screenshots are not included in the supplied
-            materials, so this section uses a branded abstract interface instead
-            of pretending to show production screens.
+            The platform brings manager priorities, coaching signals, and
+            salesperson momentum into a focused daily view.
           </p>
         </div>
 

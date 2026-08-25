@@ -144,24 +144,25 @@ export default function Home({ navigate }) {
             </motion.p>
 
             <motion.div
-              className="mt-9 max-w-4xl"
+              className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center"
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.22 }}
             >
-              <WaitlistForm headingId="hero-title" />
-              <div className="mt-5 flex flex-wrap items-center gap-4">
-                <SiteLink
-                  href="/#product"
-                  navigate={navigate}
-                  className="text-sm font-semibold text-slate-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white focus:outline-none focus:ring-4 focus:ring-[#2d76ff]/20"
-                >
-                  See how CoachUS works
-                </SiteLink>
-                <p className="text-sm text-slate-500">
-                  Built by dealership operators for daily coaching.
-                </p>
-              </div>
+              <SiteLink
+                href="/#waitlist"
+                navigate={navigate}
+                className="inline-flex min-h-[3.25rem] items-center justify-center rounded-[18px] bg-[#2d76ff] px-7 text-sm font-semibold text-white shadow-[0_18px_48px_rgba(45,118,255,0.28)] transition hover:-translate-y-0.5 hover:bg-[#3b82ff] focus:outline-none focus:ring-4 focus:ring-[#2d76ff]/25"
+              >
+                Join our waitlist
+              </SiteLink>
+              <SiteLink
+                href="/#product"
+                navigate={navigate}
+                className="inline-flex min-h-[3.25rem] items-center justify-center rounded-[18px] border border-white/10 bg-white/[0.04] px-6 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.08] hover:text-white focus:outline-none focus:ring-4 focus:ring-[#2d76ff]/20"
+              >
+                See how CoachUS works
+              </SiteLink>
             </motion.div>
           </div>
 
@@ -383,7 +384,7 @@ export default function Home({ navigate }) {
         </div>
       </AnimatedSection>
 
-      <AnimatedSection className="px-6 pb-28">
+      <AnimatedSection id="waitlist" className="scroll-mt-32 px-6 pb-28">
         <div className="mx-auto max-w-4xl text-center">
           <p className="mx-auto flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
             <span className="h-px w-8 bg-[#ff7a45]" />
@@ -397,9 +398,8 @@ export default function Home({ navigate }) {
             Bring daily coaching clarity into the dealership.
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-            The current site already collected meaningful waitlist interest.
-            CoachUS is keeping that path open as the product moves toward pilot
-            launch.
+            CoachUS is preparing pilot access for dealership teams that want a
+            clearer daily coaching rhythm.
           </p>
           <WaitlistForm
             variant="stacked"

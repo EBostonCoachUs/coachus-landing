@@ -29,9 +29,8 @@ export default function Data({ navigate }) {
             title="From fragmented information to coaching signals."
           >
             <p>
-              The supplied materials describe CoachUS pulling from DMS, CRM, and
-              other authorized providers overnight, then breaking 25+ data points
-              into four practical signals.
+              CoachUS is designed to pull from dealership systems overnight and
+              break 25+ data points into four practical signals.
             </p>
           </SectionHeading>
 
@@ -119,7 +118,7 @@ export default function Data({ navigate }) {
               Policy
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-white">
-              Review the privacy policy draft.
+              Review the privacy policy.
             </h2>
           </div>
           <SiteLink

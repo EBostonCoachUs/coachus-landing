@@ -1,5 +1,6 @@
 import AnimatedSection from "../components/AnimatedSection.jsx";
 import SiteLink from "../components/SiteLink.jsx";
+import { assets } from "../config/site.js";
 
 export default function Leadership({ navigate }) {
   return (
@@ -20,17 +21,24 @@ export default function Leadership({ navigate }) {
             </p>
           </div>
 
-          <div className="rounded-[34px] border border-dashed border-white/[0.18] bg-white/[0.04] p-7">
-            <div className="flex aspect-[4/5] items-center justify-center rounded-[26px] border border-white/10 bg-[#0d111b] p-6 text-center">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
-                  TODO
+          <div className="relative overflow-hidden rounded-[34px] border border-white/10 bg-[#0d111b] p-7 shadow-[0_30px_120px_rgba(0,0,0,0.34)]">
+            <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#ff7a45]/70 to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(45,118,255,0.26),transparent_42%)]" />
+            <div className="relative flex aspect-[4/5] items-center justify-center rounded-[26px] border border-white/10 bg-[#070b13]/86 p-8 text-center">
+              <div className="flex flex-col items-center">
+                <div className="flex h-40 w-40 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] shadow-[0_0_70px_rgba(45,118,255,0.24)]">
+                  <img
+                    src={assets.mark}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-24 w-24 opacity-80"
+                  />
+                </div>
+                <p className="mt-8 text-sm font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
+                  Operator Built
                 </p>
-                <p className="mt-4 text-2xl font-semibold text-white">
-                  Approved founder headshot
-                </p>
-                <p className="mt-3 text-sm leading-6 text-slate-400">
-                  No approved photo was included in the supplied materials.
+                <p className="mt-4 max-w-xs text-2xl font-semibold leading-tight text-white">
+                  A coaching system shaped by the floor.
                 </p>
               </div>
             </div>
@@ -74,9 +82,8 @@ export default function Leadership({ navigate }) {
               become poor results.
             </p>
             <p>
-              The supplied read-ahead describes CoachUS as the framework Matt
-              ran on the floor, built into a tool a manager can use every day.
-              That is the center of the leadership story.
+              CoachUS brings the framework Matt ran on the floor into a tool a
+              manager can use every day.
             </p>
             <p>
               CoachUS should feel like it was built by someone who understands

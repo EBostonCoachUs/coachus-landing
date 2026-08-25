@@ -70,7 +70,6 @@ export default function WaitlistForm({
   return (
     <>
       <form
-        id="waitlist"
         aria-labelledby={headingId}
         className={`${layout} ${className}`}
         onSubmit={onSubmit}

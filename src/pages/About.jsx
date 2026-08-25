@@ -86,12 +86,9 @@ export default function About({ navigate }) {
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Where It Stands"
-            title="Built software, tested demand, focused pilot path."
+            title="Built software. Tested demand. Focused on the pilot path."
           >
-            <p>
-              CoachUS is careful about what it claims. The supplied materials
-              support these facts today.
-            </p>
+            <p>CoachUS is moving with a narrow product focus and a clear path.</p>
           </SectionHeading>
 
           <div className="mt-10 grid gap-5 md:grid-cols-3">

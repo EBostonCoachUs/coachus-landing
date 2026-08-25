@@ -51,6 +51,29 @@ function updateCanonical(href) {
   link.setAttribute("href", href);
 }
 
+function scrollToHash(hash, behavior = "smooth") {
+  if (!hash) return;
+
+  const id = hash.slice(1);
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  window.setTimeout(() => {
+    document.getElementById(id)?.scrollIntoView({
+      block: "start",
+      behavior: reduceMotion ? "auto" : behavior,
+    });
+  }, 0);
+
+  window.setTimeout(() => {
+    document.getElementById(id)?.scrollIntoView({
+      block: "start",
+      behavior: reduceMotion ? "auto" : behavior,
+    });
+  }, 120);
+}
+
 export default function App() {
   const [path, setPath] = useState(() =>
     normalizePath(window.location.pathname),
@@ -65,9 +88,7 @@ export default function App() {
 
     requestAnimationFrame(() => {
       if (url.hash) {
-        document.getElementById(url.hash.slice(1))?.scrollIntoView({
-          block: "start",
-        });
+        scrollToHash(url.hash);
       } else {
         window.scrollTo({ top: 0, left: 0 });
       }
@@ -101,9 +122,7 @@ export default function App() {
     if (!hash) return;
 
     requestAnimationFrame(() => {
-      document.getElementById(hash.slice(1))?.scrollIntoView({
-        block: "start",
-      });
+      scrollToHash(hash);
     });
   }, [path]);
 
