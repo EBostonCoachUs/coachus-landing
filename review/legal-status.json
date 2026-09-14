@@ -1,0 +1,11 @@
+{
+  "websitePrivacyApproved": false,
+  "applicationPrivacyApproved": false,
+  "websiteTermsApproved": false,
+  "approvedBy": "",
+  "approvedDate": "",
+  "note": "Website-only release requires approval of the three website notices, live deployment verification, and actual effective date. The application draft is excluded from public routes and sitemap; separate application readiness remains outstanding.",
+  "websiteCookiesApproved": false,
+  "liveWebsitePracticesVerified": false,
+  "applicationNoticePublished": false
+}

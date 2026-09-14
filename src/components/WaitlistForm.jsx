@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { reviewMode } from "../config/site.js";
 
 export default function WaitlistForm({
   variant = "inline",
@@ -13,6 +14,7 @@ export default function WaitlistForm({
     _gotcha: "",
   });
   const [status, setStatus] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const closeRef = useRef(null);
   const reduceMotion = useReducedMotion();
@@ -35,9 +37,23 @@ export default function WaitlistForm({
 
   async function onSubmit(event) {
     event.preventDefault();
+    setErrorMessage("");
     setStatus("loading");
 
     try {
+      const validationError = validateForm(form);
+      if (validationError) {
+        setErrorMessage(validationError);
+        setStatus("error");
+        return;
+      }
+
+      if (reviewMode) {
+        setStatus("preview");
+        setShowModal(true);
+        return;
+      }
+
       const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -53,9 +69,11 @@ export default function WaitlistForm({
         return;
       }
 
+      setErrorMessage("Something went wrong. Please try again.");
       setStatus("error");
     } catch (error) {
       console.error(error);
+      setErrorMessage("Something went wrong. Please try again.");
       setStatus("error");
     }
   }
@@ -140,7 +158,7 @@ export default function WaitlistForm({
         </button>
         {status === "error" && (
           <p className="text-sm text-[#ff8b68] lg:col-span-4" role="alert">
-            Something went wrong. Please try again.
+            {errorMessage || "Something went wrong. Please try again."}
           </p>
         )}
       </form>
@@ -174,11 +192,12 @@ export default function WaitlistForm({
                   id="waitlist-success-title"
                   className="text-2xl font-semibold text-white"
                 >
-                  Thank you.
+                  {status === "preview" ? "Preview validated." : "Thank you."}
                 </h2>
                 <p className="mt-3 leading-7 text-slate-300">
-                  You have been added to the CoachUS waitlist. We will be in
-                  contact soon!
+                  {status === "preview"
+                    ? "This review build checked the fields, but nothing was sent or saved."
+                    : "You have been added to the CoachUS waitlist. We will be in contact soon!"}
                 </p>
                 <button
                   ref={closeRef}
@@ -194,5 +213,29 @@ export default function WaitlistForm({
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function validateForm(form) {
+  const name = form.name.trim();
+  const email = form.email.trim();
+  const phone = form.phone.trim();
+
+  if (!name) return "Please enter your name.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    return "Please enter a valid email address.";
+  }
+  if (phone && !isValidPhone(phone)) {
+    return "Please enter a valid phone number or leave it blank.";
+  }
+  return "";
+}
+
+function isValidPhone(value) {
+  const digits = value.replace(/\D/g, "");
+  return (
+    /^[+().\-\sxX\d]+$/.test(value) &&
+    digits.length >= 7 &&
+    digits.length <= 15
   );
 }

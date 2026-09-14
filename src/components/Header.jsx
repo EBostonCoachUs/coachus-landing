@@ -1,18 +1,26 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { assets, navItems, site } from "../config/site.js";
 import SiteLink from "./SiteLink.jsx";
 
 export default function Header({ path, navigate }) {
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const toggleRef = useRef(null);
 
   useEffect(() => {
     setOpen(false);
   }, [path]);
 
+  function onKeyDown(event) {
+    if (event.key === "Escape" && open) {
+      setOpen(false);
+      toggleRef.current?.focus();
+    }
+  }
+
   return (
-    <header className="sticky top-0 z-40 px-4 py-4 md:px-6">
+    <header className="sticky top-0 z-40 px-4 py-4 md:px-6" onKeyDown={onKeyDown}>
       <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[24px] border border-white/10 bg-[#080d16]/78 px-4 py-3 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
         <SiteLink
           href="/"
@@ -61,6 +69,7 @@ export default function Header({ path, navigate }) {
         </div>
 
         <button
+          ref={toggleRef}
           type="button"
           className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] transition hover:bg-white/[0.1] focus:outline-none focus:ring-4 focus:ring-[#2d76ff]/20 lg:hidden"
           aria-label={open ? "Close navigation" : "Open navigation"}

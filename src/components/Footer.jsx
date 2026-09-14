@@ -1,4 +1,4 @@
-import { assets, navItems, site } from "../config/site.js";
+import { assets, footerLinks, site } from "../config/site.js";
 import SiteLink from "./SiteLink.jsx";
 
 export default function Footer({ navigate }) {
@@ -25,7 +25,7 @@ export default function Footer({ navigate }) {
 
         <div className="grid gap-6 sm:grid-cols-2">
           <nav aria-label="Footer navigation" className="grid gap-3">
-            {navItems.map((item) => (
+            {footerLinks.map((item) => (
               <SiteLink
                 key={item.href}
                 href={item.href}
@@ -35,13 +35,6 @@ export default function Footer({ navigate }) {
                 {item.label}
               </SiteLink>
             ))}
-            <SiteLink
-              href={site.loginRoute}
-              navigate={navigate}
-              className="text-sm text-slate-400 transition hover:text-white focus:outline-none focus:ring-4 focus:ring-[#2d76ff]/20"
-            >
-              Login
-            </SiteLink>
           </nav>
 
           <div>

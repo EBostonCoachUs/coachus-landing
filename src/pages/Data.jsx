@@ -10,14 +10,15 @@ export default function Data({ navigate }) {
         <div className="mx-auto max-w-7xl">
           <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
             <span className="h-px w-8 bg-[#ff7a45]" />
-            Data Philosophy
+            DATA & TRUST
           </p>
           <h1 className="mt-6 max-w-5xl text-balance text-5xl font-semibold leading-tight md:text-7xl">
             Data should make coaching clearer, not colder.
           </h1>
           <p className="mt-7 max-w-3xl text-xl leading-9 text-slate-300">
-            CoachUS uses dealership performance information to help people take
-            better action while the day, week, or month can still improve.
+            CoachUS is being built to turn dealership performance patterns into
+            useful coaching priorities. The manager brings the context and leads
+            the conversation.
           </p>
         </div>
       </section>
@@ -25,12 +26,12 @@ export default function Data({ navigate }) {
       <AnimatedSection className="px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <SectionHeading
-            eyebrow="How It Works"
+            eyebrow="HOW IT WORKS"
             title="From fragmented information to coaching signals."
           >
             <p>
-              CoachUS is designed to pull from dealership systems overnight and
-              break 25+ data points into four practical signals.
+              CoachUS is designed to organize dealership performance
+              information into practical signals for coaching conversations.
             </p>
           </SectionHeading>
 
@@ -53,7 +54,7 @@ export default function Data({ navigate }) {
       <AnimatedSection className="px-6 pb-24">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
-            eyebrow="Principles"
+            eyebrow="PRINCIPLES"
             title="Responsible data use starts with a narrower purpose."
           >
             <p>
@@ -86,7 +87,7 @@ export default function Data({ navigate }) {
             <div>
               <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
                 <span className="h-px w-8 bg-[#ff7a45]" />
-                AI Approach
+                AI APPROACH
               </p>
               <h2 className="mt-6 text-balance text-3xl font-semibold leading-tight md:text-5xl">
                 AI assists the coach. It is not the coach.
@@ -115,10 +116,10 @@ export default function Data({ navigate }) {
         <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-[32px] border border-white/10 bg-white/[0.045] p-7 md:flex-row md:items-center md:justify-between md:p-10">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
-              Policy
+              WEBSITE NOTICES
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-white">
-              Review the privacy policy.
+              Review the current website privacy notice.
             </h2>
           </div>
           <SiteLink

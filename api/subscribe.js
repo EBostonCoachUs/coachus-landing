@@ -1,13 +1,16 @@
 // /api/subscribe.js
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FIELD_LIMITS = {
   name: 120,
   email: 254,
   phone: 32,
   gotcha: 200,
 };
+const DEFAULT_RECIPIENTS = [
+  "eric.boston@coachus.com",
+  "matt.cady@coachus.com",
+];
 
 export const config = {
   api: {
@@ -18,11 +21,26 @@ export const config = {
 };
 
 export default async function handler(req, res) {
+  res.setHeader("Cache-Control", "no-store");
+
   if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
     return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
   try {
+    if (!process.env.RESEND_API_KEY) {
+      return res.status(503).json({ ok: false, error: "Intake unavailable" });
+    }
+
+    if (
+      process.env.PUBLIC_ORIGIN &&
+      req.headers.origin &&
+      req.headers.origin !== process.env.PUBLIC_ORIGIN
+    ) {
+      return res.status(403).json({ ok: false, error: "Forbidden" });
+    }
+
     if (!req.body || typeof req.body !== "object" || Array.isArray(req.body)) {
       return res.status(400).json({ ok: false, error: "Invalid request" });
     }
@@ -57,16 +75,14 @@ export default async function handler(req, res) {
 
     const from = process.env.FROM_ADDRESS || "CoachUS <noreply@coachus.com>";
 
-    const to = [
-      "eric.boston@coachus.com",
-      "matt.cady@coachus.com",
-    ];
+    const to = notificationRecipients(process.env.LEAD_NOTIFY_TO);
 
     const safeName = escapeHtml(cleanName || "(not provided)");
     const safeEmail = escapeHtml(cleanEmail);
     const safePhone = escapeHtml(cleanPhone || "(not provided)");
 
     const subject = `New Waitlist Signup - ${cleanName || cleanEmail}`;
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     const html = `
       <div style="font-family:Inter,Arial,sans-serif;background:#0B0B0B;padding:24px;color:#F3F3F3;">
@@ -141,6 +157,17 @@ function isValidPhone(value) {
     digits.length >= 7 &&
     digits.length <= 15
   );
+}
+
+function notificationRecipients(value) {
+  if (typeof value !== "string") return DEFAULT_RECIPIENTS;
+
+  const recipients = value
+    .split(",")
+    .map((item) => normalizeEmail(item))
+    .filter((item) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(item));
+
+  return recipients.length ? recipients : DEFAULT_RECIPIENTS;
 }
 
 function escapeHtml(s) {

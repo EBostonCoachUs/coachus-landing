@@ -6,14 +6,14 @@ export default function Leadership({ navigate }) {
   return (
     <>
       <section className="px-6 py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <div>
             <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
               <span className="h-px w-8 bg-[#ff7a45]" />
-              Leadership
+              FOUNDER
             </p>
             <h1 className="mt-6 max-w-4xl text-balance text-5xl font-semibold leading-tight md:text-7xl">
-              Matt Cady, Founder and CEO.
+              Matt Cady built CoachUS from the dealership floor.
             </h1>
             <p className="mt-7 max-w-2xl text-xl leading-9 text-slate-300">
               CoachUS is founder-led and operator-built by someone who spent his
@@ -21,28 +21,22 @@ export default function Leadership({ navigate }) {
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[34px] border border-white/10 bg-[#0d111b] p-7 shadow-[0_30px_120px_rgba(0,0,0,0.34)]">
-            <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#ff7a45]/70 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(45,118,255,0.26),transparent_42%)]" />
-            <div className="relative flex aspect-[4/5] items-center justify-center rounded-[26px] border border-white/10 bg-[#070b13]/86 p-8 text-center">
-              <div className="flex flex-col items-center">
-                <div className="flex h-40 w-40 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] shadow-[0_0_70px_rgba(45,118,255,0.24)]">
-                  <img
-                    src={assets.mark}
-                    alt=""
-                    aria-hidden="true"
-                    className="h-24 w-24 opacity-80"
-                  />
-                </div>
-                <p className="mt-8 text-sm font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
-                  Operator Built
-                </p>
-                <p className="mt-4 max-w-xs text-2xl font-semibold leading-tight text-white">
-                  A coaching system shaped by the floor.
-                </p>
-              </div>
+          <figure className="m-0 max-w-md justify-self-start lg:justify-self-end">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[34px] border border-white/10 bg-[#070b13] shadow-[0_30px_120px_rgba(0,0,0,0.34)]">
+              <img
+                src={assets.founderHeadshot}
+                alt="Matt Cady, founder of CoachUS"
+                className="absolute left-1/2 top-[44%] h-auto w-[156%] max-w-none -translate-x-1/2 -translate-y-1/2"
+                width="3375"
+                height="4219"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-          </div>
+            <figcaption className="mt-4 text-sm font-semibold text-slate-100">
+              Matt Cady <span className="font-normal text-slate-400">· Founder</span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -50,25 +44,25 @@ export default function Leadership({ navigate }) {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="rounded-[32px] border border-white/10 bg-[#0d111b] p-7">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-              Background
+              BACKGROUND
             </p>
             <dl className="mt-7 grid gap-6">
               <div>
                 <dt className="text-sm text-slate-500">Role</dt>
                 <dd className="mt-1 text-lg font-semibold text-white">
-                  Founder and CEO, CoachUS
+                  Founder, CoachUS
                 </dd>
               </div>
               <div>
                 <dt className="text-sm text-slate-500">Experience</dt>
                 <dd className="mt-1 text-lg font-semibold text-white">
-                  25 years on dealership floors
+                  25+ years on dealership floors
                 </dd>
               </div>
               <div>
-                <dt className="text-sm text-slate-500">Operating proof</dt>
+                <dt className="text-sm text-slate-500">Focus</dt>
                 <dd className="mt-1 text-lg font-semibold text-white">
-                  Led a Toyota sales team ranked in the national top 25
+                  Manager-led coaching for sales teams
                 </dd>
               </div>
             </dl>
@@ -76,48 +70,20 @@ export default function Leadership({ navigate }) {
 
           <div className="space-y-6 text-lg leading-9 text-slate-300">
             <p>
-              Matt Cady built CoachUS from the management systems and coaching
-              standards he used on dealership floors. The product is shaped by a
-              direct belief: managers need practical help before poor habits
-              become poor results.
+              After decades leading dealership sales teams, Matt Cady built
+              CoachUS around a simple belief: developing your people deserves
+              the same attention as measuring their performance.
             </p>
             <p>
-              CoachUS brings the framework Matt ran on the floor into a tool a
-              manager can use every day.
+              CoachUS brings that coaching focus into software a manager can use
+              every day, without replacing the judgment, relationships, and
+              context that make coaching work.
             </p>
             <p>
-              CoachUS should feel like it was built by someone who understands
-              dealership pace, pressure, and accountability because it was.
+              The product should feel like it was built by someone who
+              understands dealership pace, pressure, and accountability because
+              it was.
             </p>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      <AnimatedSection className="px-6 pb-24">
-        <div className="mx-auto overflow-hidden rounded-[36px] border border-white/10 bg-[#0d111b]">
-          <div className="grid gap-8 p-7 md:p-10 lg:grid-cols-3">
-            {[
-              {
-                title: "Operator reality first",
-                text: "If experienced dealership managers would say a workflow is not how the store actually works, the product should change.",
-              },
-              {
-                title: "Human coaching stays central",
-                text: "CoachUS enhances the manager's ability to coach. It does not replace relationships, judgment, or conversations.",
-              },
-              {
-                title: "Improvement over labels",
-                text: "The product should help salespeople see progress, daily focus, recognition, and a next step they can take.",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-[28px] bg-white/[0.045] p-6"
-              >
-                <p className="text-xl font-semibold text-white">{item.title}</p>
-                <p className="mt-4 leading-7 text-slate-300">{item.text}</p>
-              </div>
-            ))}
           </div>
         </div>
       </AnimatedSection>
@@ -126,7 +92,7 @@ export default function Leadership({ navigate }) {
         <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-[32px] border border-white/10 bg-white/[0.045] p-7 md:flex-row md:items-center md:justify-between md:p-10">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
-              Company Story
+              COMPANY STORY
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-white">
               Learn why CoachUS exists.
