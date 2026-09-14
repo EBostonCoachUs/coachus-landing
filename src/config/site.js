@@ -16,11 +16,9 @@ export const site = {
 };
 
 export const navItems = [
-  { label: "Product", href: "/#product" },
+  { label: "Product", href: "/product" },
   { label: "About", href: "/about" },
-  { label: "Founder", href: "/leadership" },
-  { label: "Data", href: "/data" },
-  { label: "Privacy", href: "/privacy" },
+  { label: "Data & Trust", href: "/data" },
 ];
 
 export const footerLinks = [

@@ -1,28 +1,22 @@
 import { site } from "../config/site.js";
-
 export default function Support() {
   return (
-    <section className="px-6 py-20 md:py-28">
-      <div className="mx-auto max-w-3xl">
-        <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#ff7a45]">
-          <span className="h-px w-8 bg-[#ff7a45]" />
-          CONTACT & SUPPORT
-        </p>
-        <h1 className="mt-6 text-balance text-5xl font-semibold leading-tight md:text-7xl">
-          Talk to CoachUS.
-        </h1>
-        <p className="mt-7 text-xl leading-9 text-slate-300">
+    <section className="section">
+      <div className="container max-w-3xl">
+        <p className="eyebrow">Contact & support</p>
+        <h1 className="page-title">Talk to CoachUS.</h1>
+        <p className="intro">
           For website questions, early access, or privacy inquiries, contact{" "}
           <a
-            className="underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white focus:outline-none focus:ring-4 focus:ring-[#2d76ff]/20"
+            className="underline underline-offset-4"
             href={`mailto:${site.contactEmail}`}
           >
             {site.contactEmail}
           </a>
           .
         </p>
-        <div className="mt-10 rounded-[30px] border border-white/10 bg-[#0d111b] p-7">
-          <h2 className="text-2xl font-semibold text-white">
+        <div className="panel mt-9">
+          <h2 className="text-2xl font-semibold">
             Already participating in a pilot?
           </h2>
           <p className="mt-5 leading-8 text-slate-300">

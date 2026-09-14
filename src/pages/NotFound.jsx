@@ -8,11 +8,10 @@ export default function NotFound({ navigate }) {
           Page not found
         </p>
         <h1 className="mt-5 text-5xl font-semibold text-white">
-          This page is not part of CoachUS yet.
+          We couldn’t find that page.
         </h1>
         <p className="mt-5 text-lg leading-8 text-slate-300">
-          Return to the public site and keep exploring the current CoachUS
-          marketing experience.
+          The address may have changed. Return to CoachUS to keep exploring.
         </p>
         <SiteLink
           href="/"

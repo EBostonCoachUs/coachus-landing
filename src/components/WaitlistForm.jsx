@@ -1,234 +1,238 @@
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { reviewMode } from "../config/site.js";
+import SiteLink from "./SiteLink.jsx";
+
+const empty = { name: "", email: "", phone: "", _gotcha: "" };
 
 export default function WaitlistForm({
-  variant = "inline",
   headingId,
+  navigate,
+  compact = false,
   className = "",
 }) {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    _gotcha: "",
-  });
-  const [status, setStatus] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const closeRef = useRef(null);
-  const reduceMotion = useReducedMotion();
+  const uid = useId();
+  const fid = (name) => `${uid}-${name}`;
+  const [form, setForm] = useState(empty);
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState("idle");
+  const message = useRef(null);
+  const busy = useRef(false);
 
   useEffect(() => {
-    if (!showModal) return undefined;
+    if (status !== "idle" && status !== "sending") {
+      message.current?.focus();
+    }
+  }, [status]);
 
-    closeRef.current?.focus();
-    const onKeyDown = (event) => {
-      if (event.key === "Escape") setShowModal(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [showModal]);
-
-  function updateField(event) {
-    const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
-  }
-
-  async function onSubmit(event) {
+  async function submit(event) {
     event.preventDefault();
-    setErrorMessage("");
-    setStatus("loading");
+    if (busy.current) return;
 
+    const checked = validateWaitlist(form);
+    setErrors(checked.errors);
+    if (Object.keys(checked.errors).length) {
+      setStatus("invalid");
+      requestAnimationFrame(() => message.current?.focus());
+      return;
+    }
+
+    if (reviewMode) {
+      setStatus("preview");
+      return;
+    }
+
+    busy.current = true;
+    setStatus("sending");
     try {
-      const validationError = validateForm(form);
-      if (validationError) {
-        setErrorMessage(validationError);
-        setStatus("error");
-        return;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
+      let response;
+      try {
+        response = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...checked.value,
+            _gotcha: form._gotcha,
+          }),
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeout);
       }
-
-      if (reviewMode) {
-        setStatus("preview");
-        setShowModal(true);
-        return;
-      }
-
-      const response = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
 
       const data = await response.json();
-
-      if (response.ok && data.ok) {
-        setStatus("ok");
-        setForm({ name: "", email: "", phone: "", _gotcha: "" });
-        setShowModal(true);
-        return;
+      if (!response.ok || !data.ok) {
+        setErrors({
+          form:
+            response.status === 503
+              ? "The waitlist is temporarily unavailable. Please try again soon."
+              : "Your request could not be confirmed. Please try again.",
+        });
+        setStatus("error");
+      } else {
+        setForm(empty);
+        setStatus("received");
       }
-
-      setErrorMessage("Something went wrong. Please try again.");
+    } catch {
+      setErrors({
+        form: "We could not confirm receipt. Your details are still here; please try again.",
+      });
       setStatus("error");
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Something went wrong. Please try again.");
-      setStatus("error");
+    } finally {
+      busy.current = false;
     }
   }
 
-  const fieldClass =
-    "h-[3.25rem] min-h-[3.25rem] w-full rounded-[18px] border border-white/10 bg-white/[0.055] px-4 text-base text-white outline-none transition placeholder:text-slate-500 focus:border-[#2d76ff]/70 focus:bg-white/[0.08] focus:ring-4 focus:ring-[#2d76ff]/15";
-  const layout =
-    variant === "stacked"
-      ? "grid gap-3"
-      : "grid gap-3 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end";
+  const fields = [
+    ["name", "Name", "text", "name", true],
+    ["email", "Email", "email", "email", true],
+    ["phone", "Phone (optional)", "tel", "tel", false],
+  ];
 
   return (
-    <>
-      <form
-        aria-labelledby={headingId}
-        className={`${layout} ${className}`}
-        onSubmit={onSubmit}
-      >
-        <div>
-          <label className="sr-only" htmlFor={`${variant}-waitlist-name`}>
-            Name
-          </label>
-          <input
-            id={`${variant}-waitlist-name`}
-            className={fieldClass}
-            name="name"
-            value={form.name}
-            onChange={updateField}
-            placeholder="Name"
-            autoComplete="name"
-            required
-          />
+    <div
+      className={`waitlist-wrap ${
+        compact ? "compact-signup" : "stacked-signup"
+      } ${className}`.trim()}
+    >
+      <form onSubmit={submit} aria-labelledby={headingId} noValidate>
+        {Object.keys(errors).length > 0 && (
+          <div
+            className="form-errors"
+            role="alert"
+            tabIndex={-1}
+            ref={message}
+          >
+            <p>Please check your details.</p>
+            <ul>
+              {Object.entries(errors).map(([key, value]) => (
+                <li key={key}>
+                  {key === "form" ? (
+                    value
+                  ) : (
+                    <a
+                      href={`#${fid(key)}`}
+                      onClick={() =>
+                        document.getElementById(fid(key))?.focus()
+                      }
+                    >
+                      {fields.find((field) => field[0] === key)?.[1] || key}:{" "}
+                      {value}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="signup-fields">
+          {fields.map(([name, label, type, autocomplete, required]) => (
+            <div className="signup-field" key={name}>
+              <label htmlFor={fid(name)}>{label}</label>
+              <input
+                className="form-field"
+                id={fid(name)}
+                name={name}
+                type={type}
+                autoComplete={autocomplete}
+                value={form[name]}
+                required={required}
+                maxLength={name === "email" ? 254 : name === "phone" ? 32 : 120}
+                aria-invalid={!!errors[name]}
+                aria-describedby={errors[name] ? fid(`error-${name}`) : undefined}
+                onChange={(event) =>
+                  setForm({ ...form, [name]: event.target.value })
+                }
+              />
+              {errors[name] && (
+                <p id={fid(`error-${name}`)} className="field-error">
+                  {errors[name]}
+                </p>
+              )}
+            </div>
+          ))}
+          <button
+            disabled={status === "sending"}
+            className="button primary signup-button"
+            type="submit"
+          >
+            {status === "sending" ? "Sending..." : "Join our waitlist"}
+          </button>
         </div>
-        <div>
-          <label className="sr-only" htmlFor={`${variant}-waitlist-email`}>
-            Email
-          </label>
+        <div hidden aria-hidden="true">
+          <label htmlFor={fid("website")}>Leave blank</label>
           <input
-            id={`${variant}-waitlist-email`}
-            className={fieldClass}
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={updateField}
-            placeholder="Email"
-            autoComplete="email"
-            required
-          />
-        </div>
-        <div>
-          <label className="sr-only" htmlFor={`${variant}-waitlist-phone`}>
-            Phone number
-          </label>
-          <input
-            id={`${variant}-waitlist-phone`}
-            className={fieldClass}
-            name="phone"
-            type="tel"
-            value={form.phone}
-            onChange={updateField}
-            placeholder="Phone (optional)"
-            autoComplete="tel"
-          />
-        </div>
-        <div aria-hidden="true" className="hidden">
-          <label htmlFor={`${variant}-company`}>Company</label>
-          <input
-            id={`${variant}-company`}
+            id={fid("website")}
             name="_gotcha"
-            tabIndex="-1"
+            tabIndex={-1}
             autoComplete="off"
             value={form._gotcha}
-            onChange={updateField}
+            onChange={(event) =>
+              setForm({ ...form, _gotcha: event.target.value })
+            }
           />
         </div>
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          className="h-[3.25rem] min-h-[3.25rem] rounded-[18px] bg-[#2d76ff] px-6 text-sm font-semibold text-white shadow-[0_18px_48px_rgba(45,118,255,0.28)] transition hover:-translate-y-0.5 hover:bg-[#3b82ff] focus:outline-none focus:ring-4 focus:ring-[#2d76ff]/25 disabled:translate-y-0 disabled:cursor-wait disabled:opacity-70"
-        >
-          {status === "loading" ? "Sending..." : "Join our waitlist"}
-        </button>
-        {status === "error" && (
-          <p className="text-sm text-[#ff8b68] lg:col-span-4" role="alert">
-            {errorMessage || "Something went wrong. Please try again."}
-          </p>
-        )}
+        <p className="signup-note">
+          {reviewMode
+            ? "Preview only. Nothing will be sent or saved. "
+            : "We'll use these details to respond to your request. "}
+          <SiteLink href="/privacy" navigate={navigate}>
+            Privacy Policy
+          </SiteLink>
+        </p>
       </form>
-
-      <AnimatePresence>
-        {showModal && (
-          <>
-            <motion.button
-              aria-label="Close waitlist confirmation"
-              className="fixed inset-0 z-50 cursor-default bg-black/65 backdrop-blur-md"
-              initial={reduceMotion ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowModal(false)}
-            />
-            <motion.div
-              aria-labelledby="waitlist-success-title"
-              aria-modal="true"
-              className="fixed inset-0 z-50 flex items-center justify-center px-5"
-              role="dialog"
-              initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 18, scale: 0.97 }}
-              transition={{ duration: 0.24 }}
-            >
-              <div className="w-full max-w-md rounded-[28px] border border-white/[0.12] bg-[#0d111b]/95 p-8 shadow-[0_30px_100px_rgba(0,0,0,0.45)]">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#2d76ff]/15 text-2xl font-semibold text-[#78a9ff] ring-1 ring-[#2d76ff]/25">
-                  OK
-                </div>
-                <h2
-                  id="waitlist-success-title"
-                  className="text-2xl font-semibold text-white"
-                >
-                  {status === "preview" ? "Preview validated." : "Thank you."}
-                </h2>
-                <p className="mt-3 leading-7 text-slate-300">
-                  {status === "preview"
-                    ? "This review build checked the fields, but nothing was sent or saved."
-                    : "You have been added to the CoachUS waitlist. We will be in contact soon!"}
-                </p>
-                <button
-                  ref={closeRef}
-                  type="button"
-                  className="mt-7 w-full rounded-[18px] border border-white/10 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15 focus:outline-none focus:ring-4 focus:ring-[#2d76ff]/20"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+      {["preview", "received"].includes(status) && (
+        <div className="panel mt-6" role="status" ref={message} tabIndex={-1}>
+          <h3 className="text-xl font-semibold">
+            {status === "preview" ? "Your details passed validation." : "Thank you."}
+          </h3>
+          <p className="mt-3">
+            {status === "preview"
+              ? "This is a preview. Nothing was sent or saved."
+              : "You have been added to the CoachUS waitlist. We will be in contact soon."}
+          </p>
+          <button
+            className="button secondary mt-4"
+            onClick={() => {
+              setStatus("idle");
+              document.getElementById(fid("email"))?.focus();
+            }}
+            type="button"
+          >
+            Edit details
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
-function validateForm(form) {
-  const name = form.name.trim();
-  const email = form.email.trim();
-  const phone = form.phone.trim();
+function validateWaitlist(form) {
+  const value = {
+    name: clean(form.name, 120),
+    email: clean(form.email, 254).toLowerCase(),
+    phone: clean(form.phone, 32),
+  };
+  const errors = {};
 
-  if (!name) return "Please enter your name.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
-    return "Please enter a valid email address.";
+  if (!value.name) errors.name = "Enter your name.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.email)) {
+    errors.email = "Enter a valid email address.";
   }
-  if (phone && !isValidPhone(phone)) {
-    return "Please enter a valid phone number or leave it blank.";
+  if (value.phone && !isValidPhone(value.phone)) {
+    errors.phone = "Enter a valid phone number or leave this blank.";
   }
-  return "";
+
+  return { value, errors };
+}
+
+function clean(value, maxLength) {
+  return String(value || "")
+    .replace(/[\u0000-\u001f\u007f]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength);
 }
 
 function isValidPhone(value) {
