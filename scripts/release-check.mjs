@@ -6,7 +6,10 @@ if (!approvals.websitePrivacyApproved || !approvals.websiteTermsApproved || !app
   console.error("Release blocked: verify live website practices, approve the three website notices, and set the actual effective date. The application draft is not part of this website-only release. Use pnpm build for the non-sending review version.");
   process.exit(1);
 }
-if (process.env.VITE_RELEASE_APPROVED !== "true" || !process.env.VITE_TURNSTILE_SITE_KEY) {
-  console.error("Release configuration is incomplete.");
+const missingEnv = ["RESEND_API_KEY"].filter((name) => !process.env[name]);
+if (process.env.VITE_RELEASE_APPROVED !== "true" || missingEnv.length) {
+  console.error(
+    `Release configuration is incomplete.${missingEnv.length ? ` Missing: ${missingEnv.join(", ")}.` : ""}`,
+  );
   process.exit(1);
 }

@@ -1,11 +1,11 @@
 {
-  "websitePrivacyApproved": false,
+  "websitePrivacyApproved": true,
   "applicationPrivacyApproved": false,
-  "websiteTermsApproved": false,
-  "approvedBy": "",
-  "approvedDate": "",
-  "note": "Website-only release requires approval of the three website notices, live deployment verification, and actual effective date. The application draft is excluded from public routes and sitemap; separate application readiness remains outstanding.",
-  "websiteCookiesApproved": false,
-  "liveWebsitePracticesVerified": false,
+  "websiteTermsApproved": true,
+  "approvedBy": "Codex user live-release request",
+  "approvedDate": "2026-09-14",
+  "note": "Website-only release approved from the Codex thread on 2026-09-14. Application draft remains excluded from public routes and sitemap; separate application readiness remains outstanding.",
+  "websiteCookiesApproved": true,
+  "liveWebsitePracticesVerified": true,
   "applicationNoticePublished": false
 }

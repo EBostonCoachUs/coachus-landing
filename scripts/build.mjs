@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process";
-const release = process.argv.includes("--release");
+const release =
+  process.argv.includes("--release") || process.env.VERCEL_ENV === "production";
 const env = {
   ...process.env,
   VITE_RELEASE_APPROVED: release ? "true" : "false",
@@ -11,7 +12,7 @@ if (release) {
   });
   if (check.status !== 0) process.exit(check.status || 1);
 }
-// A plain build always produces a safe, non-sending review, even if a local env file says otherwise.
+// Local and preview builds stay in non-sending review mode by default.
 for (const args of [
   ["node_modules/vite/bin/vite.js", "build"],
   ["scripts/prerender.mjs"],

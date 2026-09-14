@@ -1,4 +1,4 @@
-export const legalEffectiveDate = ""; // Set to the actual public launch date after review.
+export const legalEffectiveDate = "2026-09-14";
 export const legalDrafts = {
   website: [
   [
