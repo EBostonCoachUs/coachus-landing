@@ -27,7 +27,7 @@ export const pageMeta = {
   "/early-access": {
     title: "Request early access | CoachUS",
     description:
-      "Join the CoachUS waitlist and share the best way for Matt Cady to follow up.",
+      "Join the CoachUS waitlist and share your dealership contact details.",
   },
   "/privacy": {
     title: "Privacy Policy | CoachUS LLC",

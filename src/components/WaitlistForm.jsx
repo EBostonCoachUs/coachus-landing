@@ -2,7 +2,13 @@ import { useEffect, useId, useRef, useState } from "react";
 import { reviewMode } from "../config/site.js";
 import SiteLink from "./SiteLink.jsx";
 
-const empty = { name: "", email: "", phone: "", _gotcha: "" };
+const empty = {
+  name: "",
+  email: "",
+  dealership: "",
+  phone: "",
+  _gotcha: "",
+};
 
 export default function WaitlistForm({
   headingId,
@@ -87,6 +93,7 @@ export default function WaitlistForm({
   const fields = [
     ["name", "Name", "text", "name", true],
     ["email", "Email", "email", "email", true],
+    ["dealership", "Dealership", "text", "organization", true],
     ["phone", "Phone (optional)", "tel", "tel", false],
   ];
 
@@ -138,7 +145,15 @@ export default function WaitlistForm({
                 autoComplete={autocomplete}
                 value={form[name]}
                 required={required}
-                maxLength={name === "email" ? 254 : name === "phone" ? 32 : 120}
+                maxLength={
+                  name === "email"
+                    ? 254
+                    : name === "dealership"
+                      ? 160
+                      : name === "phone"
+                        ? 32
+                        : 120
+                }
                 aria-invalid={!!errors[name]}
                 aria-describedby={errors[name] ? fid(`error-${name}`) : undefined}
                 onChange={(event) =>
@@ -212,14 +227,16 @@ function validateWaitlist(form) {
   const value = {
     name: clean(form.name, 120),
     email: clean(form.email, 254).toLowerCase(),
+    dealership: clean(form.dealership, 160),
     phone: clean(form.phone, 32),
   };
   const errors = {};
 
   if (!value.name) errors.name = "Enter your name.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.email)) {
-    errors.email = "Enter a valid email address.";
+      errors.email = "Enter a valid email address.";
   }
+  if (!value.dealership) errors.dealership = "Enter your dealership.";
   if (value.phone && !isValidPhone(value.phone)) {
     errors.phone = "Enter a valid phone number or leave this blank.";
   }

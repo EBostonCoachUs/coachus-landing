@@ -4,6 +4,7 @@ import { Resend } from "resend";
 const FIELD_LIMITS = {
   name: 120,
   email: 254,
+  dealership: 160,
   phone: 32,
   gotcha: 200,
 };
@@ -45,7 +46,13 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: "Invalid request" });
     }
 
-    const { name = "", email = "", phone = "", _gotcha = "" } = req.body;
+    const {
+      name = "",
+      email = "",
+      dealership = "",
+      phone = "",
+      _gotcha = "",
+    } = req.body;
 
     // spam trap
     if (normalizeField(_gotcha, FIELD_LIMITS.gotcha)) {
@@ -55,6 +62,7 @@ export default async function handler(req, res) {
     if (
       isTooLong(name, FIELD_LIMITS.name) ||
       isTooLong(email, FIELD_LIMITS.email) ||
+      isTooLong(dealership, FIELD_LIMITS.dealership) ||
       isTooLong(phone, FIELD_LIMITS.phone)
     ) {
       return res.status(400).json({ ok: false, error: "Invalid submission" });
@@ -62,11 +70,19 @@ export default async function handler(req, res) {
 
     const cleanName = normalizeField(name, FIELD_LIMITS.name);
     const cleanEmail = normalizeEmail(email);
+    const cleanDealership = normalizeField(
+      dealership,
+      FIELD_LIMITS.dealership,
+    );
     const cleanPhone = normalizeField(phone, FIELD_LIMITS.phone);
 
     // Basic email validation without accepting whitespace or control chars.
     if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(cleanEmail)) {
       return res.status(400).json({ ok: false, error: "Invalid email" });
+    }
+
+    if (!cleanName || !cleanDealership) {
+      return res.status(400).json({ ok: false, error: "Missing required fields" });
     }
 
     if (cleanPhone && !isValidPhone(cleanPhone)) {
@@ -79,9 +95,10 @@ export default async function handler(req, res) {
 
     const safeName = escapeHtml(cleanName || "(not provided)");
     const safeEmail = escapeHtml(cleanEmail);
+    const safeDealership = escapeHtml(cleanDealership);
     const safePhone = escapeHtml(cleanPhone || "(not provided)");
 
-    const subject = `New Waitlist Signup - ${cleanName || cleanEmail}`;
+    const subject = `New Waitlist Signup - ${cleanDealership}`;
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const html = `
@@ -100,6 +117,11 @@ export default async function handler(req, res) {
           <div style="margin-bottom:12px;padding:14px 16px;background:#18181b;border:1px solid #27272a;border-radius:14px;">
             <p style="margin:0 0 8px 0;color:#a1a1aa;font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Email</p>
             <p style="margin:0;color:#F3F3F3;font-size:16px;">${safeEmail}</p>
+          </div>
+
+          <div style="margin-bottom:12px;padding:14px 16px;background:#18181b;border:1px solid #27272a;border-radius:14px;">
+            <p style="margin:0 0 8px 0;color:#a1a1aa;font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Dealership</p>
+            <p style="margin:0;color:#F3F3F3;font-size:16px;">${safeDealership}</p>
           </div>
 
           <div style="margin-bottom:12px;padding:14px 16px;background:#18181b;border:1px solid #27272a;border-radius:14px;">

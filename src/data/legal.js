@@ -8,7 +8,7 @@ export const legalDrafts = {
   ],
   [
     "Information we collect",
-    "When you join the waitlist, we collect your name, email address, and optional phone number. If you contact us directly, we receive your contact details, message, and any attachments or other information you choose to provide.",
+    "When you join the waitlist, we collect your name, email address, dealership, and optional phone number. If you contact us directly, we receive your contact details, message, and any attachments or other information you choose to provide.",
     "Our website and service providers process technical information needed to deliver and protect the website, such as IP addresses, browser and device information, request times, referring pages, security signals, and error records. When email verification is enabled, we also process verification and delivery records. A request may include a limited campaign source label from the link you used.",
     "Please do not send customer records, financial information, passwords, or sensitive dealership information through the website inquiry form or a general email inquiry."
   ],

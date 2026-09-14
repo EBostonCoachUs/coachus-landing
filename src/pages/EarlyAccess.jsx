@@ -8,8 +8,8 @@ export default function EarlyAccess({ navigate }) {
           See whether CoachUS fits your dealership.
         </h1>
         <p className="intro">
-          Share your name, email, and optional phone number. Matt Cady will
-          review your request and follow up about fit and next steps.
+          Share your name, email, dealership, and optional phone number. Matt
+          Cady will review your request and follow up about fit and next steps.
         </p>
         <WaitlistForm headingId="access-title" navigate={navigate} />
       </div>
